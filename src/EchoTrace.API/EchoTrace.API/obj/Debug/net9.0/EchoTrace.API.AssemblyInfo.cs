@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EchoTrace.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c215cda7ee2ef08661e6dbd8a92e3eb637b82d82")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7cb7a07a68b9874786057101d7c33a0ac319773")]
 [assembly: System.Reflection.AssemblyProductAttribute("EchoTrace.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EchoTrace.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
