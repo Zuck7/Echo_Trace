@@ -47,30 +47,6 @@ Echo-Trace provides a verifiable Digital Product Passport by:
 
 ### Run with Docker Compose
 
-```bash
-git clone https://github.com/your-org/echo-trace.git
-cd echo-trace
-
-# Start all services (SQL Server, Redis, MinIO, API, File Service, Web)
-docker compose up
-
-# Apply database migrations (first run only)
-docker compose exec api dotnet ef database update
-
-# Access the app
-open http://localhost:8080
-```
-
-### Service URLs (local)
-
-| Service | URL |
-|---------|-----|
-| Web App | http://localhost:8080 |
-| Core API | https://localhost:5001 |
-| API Docs (Swagger) | https://localhost:5001/api/docs |
-| File Service | http://localhost:3000 |
-| MinIO Console | http://localhost:9001 |
-
 ---
 
 ## Documentation
@@ -116,16 +92,6 @@ Browser (React SPA)
                                         ▼
                                  Azure Blob / MinIO
 ```
-
----
-
-## Development Roadmap
-
-- **Phase 1 (MVP):** Multi-tenant onboarding, supply chain graph, document upload, audit trail
-- **Phase 2 (Compliance Engine):** Trace-back, compliance scoring, DPP generation, expiry alerts
-- **Phase 3 (Scale):** Production Kubernetes, integrations, performance hardening
-
-See [ROADMAP.md](docs/ROADMAP.md) for detailed milestones.
 
 ---
 
