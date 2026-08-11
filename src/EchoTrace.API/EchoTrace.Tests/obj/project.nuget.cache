@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wK1hIG/P7KU=",
+  "dgSpecHash": "4dUot1fLzTE=",
   "success": true,
-  "projectFilePath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/EchoTrace.Tests.csproj",
+  "projectFilePath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/EchoTrace.Tests.csproj",
   "expectedPackageFiles": [
     "/Users/uauva/.nuget/packages/automapper/16.0.0/automapper.16.0.0.nupkg.sha512",
     "/Users/uauva/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
@@ -113,7 +113,9 @@
     "/Users/uauva/.nuget/packages/xunit.core/2.9.2/xunit.core.2.9.2.nupkg.sha512",
     "/Users/uauva/.nuget/packages/xunit.extensibility.core/2.9.2/xunit.extensibility.core.2.9.2.nupkg.sha512",
     "/Users/uauva/.nuget/packages/xunit.extensibility.execution/2.9.2/xunit.extensibility.execution.2.9.2.nupkg.sha512",
-    "/Users/uauva/.nuget/packages/xunit.runner.visualstudio/2.8.2/xunit.runner.visualstudio.2.8.2.nupkg.sha512"
+    "/Users/uauva/.nuget/packages/xunit.runner.visualstudio/2.8.2/xunit.runner.visualstudio.2.8.2.nupkg.sha512",
+    "/Users/uauva/.nuget/packages/microsoft.netcore.app.ref/9.0.16/microsoft.netcore.app.ref.9.0.16.nupkg.sha512",
+    "/Users/uauva/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.16/microsoft.aspnetcore.app.ref.9.0.16.nupkg.sha512"
   ],
   "logs": []
 }

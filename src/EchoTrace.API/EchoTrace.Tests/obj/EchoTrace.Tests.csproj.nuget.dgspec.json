@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/EchoTrace.Tests.csproj": {}
+    "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/EchoTrace.Tests.csproj": {}
   },
   "projects": {
-    "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj": {
+    "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj",
+        "projectUniqueName": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj",
         "projectName": "EchoTrace.Application",
-        "projectPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj",
+        "projectPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj",
         "packagesPath": "/Users/uauva/.nuget/packages/",
-        "outputPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/obj/",
+        "outputPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/uauva/.nuget/NuGet/NuGet.Config"
@@ -25,10 +25,11 @@
         },
         "frameworks": {
           "net9.0": {
+            "framework": "net9.0",
             "targetAlias": "net9.0",
             "projectReferences": {
-              "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj": {
-                "projectPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj"
+              "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj": {
+                "projectPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj"
               }
             }
           }
@@ -43,10 +44,11 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net9.0": {
+          "framework": "net9.0",
           "targetAlias": "net9.0",
           "dependencies": {
             "AutoMapper": {
@@ -77,23 +79,33 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[9.0.16, 9.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.16, 9.0.16]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj": {
+    "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj",
+        "projectUniqueName": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj",
         "projectName": "EchoTrace.Domain",
-        "projectPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj",
+        "projectPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj",
         "packagesPath": "/Users/uauva/.nuget/packages/",
-        "outputPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/obj/",
+        "outputPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/uauva/.nuget/NuGet/NuGet.Config"
@@ -107,6 +119,7 @@
         },
         "frameworks": {
           "net9.0": {
+            "framework": "net9.0",
             "targetAlias": "net9.0",
             "projectReferences": {}
           }
@@ -121,10 +134,11 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net9.0": {
+          "framework": "net9.0",
           "targetAlias": "net9.0",
           "imports": [
             "net461",
@@ -137,23 +151,33 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[9.0.16, 9.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.16, 9.0.16]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj": {
+    "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj",
+        "projectUniqueName": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj",
         "projectName": "EchoTrace.Infrastructure",
-        "projectPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj",
+        "projectPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj",
         "packagesPath": "/Users/uauva/.nuget/packages/",
-        "outputPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/obj/",
+        "outputPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/uauva/.nuget/NuGet/NuGet.Config"
@@ -167,10 +191,11 @@
         },
         "frameworks": {
           "net9.0": {
+            "framework": "net9.0",
             "targetAlias": "net9.0",
             "projectReferences": {
-              "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj": {
-                "projectPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj"
+              "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj": {
+                "projectPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj"
               }
             }
           }
@@ -185,10 +210,11 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net9.0": {
+          "framework": "net9.0",
           "targetAlias": "net9.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore.Design": {
@@ -227,23 +253,33 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[9.0.16, 9.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.16, 9.0.16]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/EchoTrace.Tests.csproj": {
+    "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/EchoTrace.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/EchoTrace.Tests.csproj",
+        "projectUniqueName": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/EchoTrace.Tests.csproj",
         "projectName": "EchoTrace.Tests",
-        "projectPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/EchoTrace.Tests.csproj",
+        "projectPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/EchoTrace.Tests.csproj",
         "packagesPath": "/Users/uauva/.nuget/packages/",
-        "outputPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/obj/",
+        "outputPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Tests/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/uauva/.nuget/NuGet/NuGet.Config"
@@ -257,16 +293,17 @@
         },
         "frameworks": {
           "net9.0": {
+            "framework": "net9.0",
             "targetAlias": "net9.0",
             "projectReferences": {
-              "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj": {
-                "projectPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj"
+              "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj": {
+                "projectPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj"
               },
-              "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj": {
-                "projectPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj"
+              "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj": {
+                "projectPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj"
               },
-              "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj": {
-                "projectPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj"
+              "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj": {
+                "projectPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj"
               }
             }
           }
@@ -281,10 +318,11 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net9.0": {
+          "framework": "net9.0",
           "targetAlias": "net9.0",
           "dependencies": {
             "FluentAssertions": {
@@ -327,12 +365,22 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[9.0.16, 9.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.16, 9.0.16]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

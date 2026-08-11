@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "targets": {
     "net9.0": {
       "AutoMapper/16.0.0": {
@@ -660,11 +660,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj",
+      "projectUniqueName": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj",
       "projectName": "EchoTrace.Application",
-      "projectPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj",
+      "projectPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/EchoTrace.Application.csproj",
       "packagesPath": "/Users/uauva/.nuget/packages/",
-      "outputPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/obj/",
+      "outputPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Application/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/uauva/.nuget/NuGet/NuGet.Config"
@@ -678,10 +678,11 @@
       },
       "frameworks": {
         "net9.0": {
+          "framework": "net9.0",
           "targetAlias": "net9.0",
           "projectReferences": {
-            "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj": {
-              "projectPath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj"
+            "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj": {
+              "projectPath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Domain/EchoTrace.Domain.csproj"
             }
           }
         }
@@ -696,10 +697,11 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "10.0.300"
     },
     "frameworks": {
       "net9.0": {
+        "framework": "net9.0",
         "targetAlias": "net9.0",
         "dependencies": {
           "AutoMapper": {
@@ -730,13 +732,35 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[9.0.16, 9.0.16]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[9.0.16, 9.0.16]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'AutoMapper' 16.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
+      "libraryId": "AutoMapper",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
 }

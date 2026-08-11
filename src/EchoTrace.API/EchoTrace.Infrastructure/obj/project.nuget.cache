@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "blfL6b4bRDM=",
+  "dgSpecHash": "OiH6a4o0Q00=",
   "success": true,
-  "projectFilePath": "/Users/uauva/Desktop/Programming/Personal Projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj",
+  "projectFilePath": "/Users/uauva/Desktop/Programming/personal_projects/Echo_Trace/src/EchoTrace.API/EchoTrace.Infrastructure/EchoTrace.Infrastructure.csproj",
   "expectedPackageFiles": [
     "/Users/uauva/.nuget/packages/automapper/16.0.0/automapper.16.0.0.nupkg.sha512",
     "/Users/uauva/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
@@ -99,7 +99,9 @@
     "/Users/uauva/.nuget/packages/system.text.json/10.0.0/system.text.json.10.0.0.nupkg.sha512",
     "/Users/uauva/.nuget/packages/system.threading.channels/7.0.0/system.threading.channels.7.0.0.nupkg.sha512",
     "/Users/uauva/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "/Users/uauva/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512"
+    "/Users/uauva/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512",
+    "/Users/uauva/.nuget/packages/microsoft.netcore.app.ref/9.0.16/microsoft.netcore.app.ref.9.0.16.nupkg.sha512",
+    "/Users/uauva/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.16/microsoft.aspnetcore.app.ref.9.0.16.nupkg.sha512"
   ],
   "logs": []
 }
