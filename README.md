@@ -26,7 +26,7 @@ Echo-Trace provides a verifiable Digital Product Passport by:
 
 | Layer | Technology |
 |-------|-----------|
-| Core API | C# .NET 8, Clean Architecture, MediatR, EF Core 8 |
+| Core API | C# .NET 9, Clean Architecture, MediatR, EF Core 9 |
 | Database | SQL Server 2022 (Recursive CTEs for graph traversal) |
 | File Service | Node.js 20, Express, multer, SHA-256 |
 | Document Storage | Azure Blob Storage / MinIO |
@@ -42,10 +42,48 @@ Echo-Trace provides a verifiable Digital Product Passport by:
 
 ### Prerequisites
 - Docker Desktop
-- .NET 8 SDK
+- .NET 9 SDK
 - Node.js 20+
 
 ### Run with Docker Compose
+
+1. Copy environment template:
+
+      ```bash
+      cp .env.example .env
+      ```
+
+2. Start SQL Server + API:
+
+      ```bash
+      docker compose up --build
+      ```
+
+3. Verify health endpoint:
+
+      ```bash
+      curl http://localhost:5150/health
+      ```
+
+4. Open Swagger UI:
+
+      ```
+      http://localhost:5150/swagger
+      ```
+
+### Run API without Docker
+
+```bash
+cd src/EchoTrace.API
+dotnet restore EchoTrace.sln
+dotnet build EchoTrace.sln
+dotnet test EchoTrace.sln
+dotnet run --project EchoTrace.API/EchoTrace.API.csproj
+```
+
+### CI
+
+GitHub Actions CI is configured in `.github/workflows/ci.yml` and runs restore, build, and test on pull requests and pushes to `main`.
 
 ---
 
@@ -60,6 +98,7 @@ All pre-implementation documentation lives in [`docs/`](docs/):
 | [DATA_MODEL.md](docs/DATA_MODEL.md) | Database schema, ER diagram, SQL table definitions, recursive CTE patterns |
 | [API_DESIGN.md](docs/API_DESIGN.md) | Full REST API specification for all endpoints |
 | [ROADMAP.md](docs/ROADMAP.md) | Development phases, milestones, and testing strategy |
+| [DEPLOYMENT.md](docs/DEPLOYMENT.md) | Deployment checklist, container workflow, and production verification steps |
 | [PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) | Monorepo folder structure and naming conventions |
 
 ### Architecture Decision Records

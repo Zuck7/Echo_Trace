@@ -1,4 +1,5 @@
 using System.Text;
+using EchoTrace.API.Middleware;
 using EchoTrace.Application.Common.Behaviors;
 using EchoTrace.Application.Common.Interfaces;
 using EchoTrace.Domain.Interfaces.Services;
@@ -60,8 +61,13 @@ services.AddScoped<ICurrentTenantService, CurrentTenantService>();
 // services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 
 // JWT Authentication
-var jwtKey = builder.Configuration["Jwt:Key"]
-    ?? throw new InvalidOperationException("Jwt:Key is not configured.");
+var jwtKey = builder.Configuration["Jwt:Key"];
+if (string.IsNullOrWhiteSpace(jwtKey))
+{
+    jwtKey = builder.Environment.IsEnvironment("Testing")
+        ? "this-is-a-long-test-key-for-jwt-signing-only"
+        : throw new InvalidOperationException("Jwt:Key is not configured.");
+}
 
 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -135,3 +141,5 @@ app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = Dat
    .AllowAnonymous();
 
 await app.RunAsync();
+
+public partial class Program;

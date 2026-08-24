@@ -1,0 +1,30 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# .NET
+**/bin/
+**/obj/
+*.user
+*.suo
+*.cache
+*.pdb
+
+# Coverage
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# Node
+node_modules/
+dist/

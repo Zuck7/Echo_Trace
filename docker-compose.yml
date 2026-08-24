@@ -1,0 +1,37 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: echotrace-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${SA_PASSWORD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - echotrace-sql-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -Q \"SELECT 1\" -C || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./src/EchoTrace.API
+      dockerfile: EchoTrace.API/Dockerfile
+    container_name: echotrace-api
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Default: Server=sqlserver,1433;Database=EchoTraceDb;User Id=sa;Password=${SA_PASSWORD};Encrypt=False;TrustServerCertificate=True
+      Jwt__Key: ${JWT_KEY}
+      Jwt__Issuer: echotrace-local
+      Jwt__Audience: echotrace-local
+    ports:
+      - "5150:8080"
+    restart: unless-stopped
+
+volumes:
+  echotrace-sql-data:

@@ -71,6 +71,14 @@
             "Serilog.AspNetCore": {
               "target": "Package",
               "version": "[10.0.0, )"
+            },
+            "Serilog.Enrichers.Environment": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[8.1.3, )"
             }
           },
           "imports": [

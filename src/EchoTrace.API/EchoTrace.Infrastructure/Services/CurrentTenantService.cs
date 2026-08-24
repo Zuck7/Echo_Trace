@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using EchoTrace.Application.Common.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace EchoTrace.Infrastructure.Services;
 
