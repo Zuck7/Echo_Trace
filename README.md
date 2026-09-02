@@ -35,10 +35,11 @@ This is Phase 1 of a 3-phase roadmap (see [ROADMAP.md](docs/ROADMAP.md)) — ear
 - 19 automated tests (xUnit): unit tests for cycle detection, password hashing, and hash-chain determinism; HTTP-level integration tests for auth and tenant isolation, running against EF Core InMemory so they need no external DB in CI
 - Runs end-to-end via `docker compose up --build` — SQL Server + API, with real EF Core migrations and a seeded platform-admin account
 
+A minimal **React 19 + TypeScript + Vite** frontend at [`src/EchoTrace.Web`](src/EchoTrace.Web) now covers the same flow: register/login, an organization table, a "add & link supplier" form, a live Cytoscape.js render of the supply chain graph, and the hash-chained audit trail — see [Quick Start](#quick-start-local-development) below. It's intentionally plain (no router, no state library) rather than the full feature-folder structure in [PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md); treat it as a demo shell, not the Phase-1-complete frontend.
+
 **Not built yet** (see [ROADMAP.md](docs/ROADMAP.md) for the full breakdown):
 - Document upload / certification storage (Milestone 1.5) — no Node.js file service, no MinIO wiring
-- Invitation-based supplier onboarding (Milestone 1.2's `/auth/invite` + `/auth/refresh`) — suppliers today are added directly by their buyer's Org Admin, which is why a supplier can't yet log in as itself to extend the chain another tier
-- React frontend — the API is demoed via Swagger/curl (see [scripts/demo.sh](scripts/demo.sh)) or a REST client
+- Invitation-based supplier onboarding (Milestone 1.2's `/auth/invite` + `/auth/refresh`) — suppliers today are added directly by their buyer's Org Admin, which is why a supplier can't yet log in as itself to extend the chain another tier; also means the frontend has no logout-triggering refresh, so a session silently needs re-login after the 15-minute access token expires
 - Everything in Phase 2 (compliance scoring, DPP generation, expiry alerts) and Phase 3 (scale, integrations)
 
 ---
@@ -54,7 +55,7 @@ This is Phase 1 of a 3-phase roadmap (see [ROADMAP.md](docs/ROADMAP.md)) — ear
 | CI/CD | GitHub Actions | ✅ Built |
 | File Service | Node.js 20, Express, multer, SHA-256 | 🔜 Planned (Milestone 1.5) |
 | Document Storage | Azure Blob Storage / MinIO | 🔜 Planned (Milestone 1.5) |
-| Frontend | React 18, TypeScript, Vite, Tailwind CSS, Cytoscape.js | 🔜 Planned |
+| Frontend | React 19, TypeScript, Vite, Cytoscape.js | ✅ Minimal demo shell built — Tailwind, routing, full feature structure planned |
 | Cache | Redis 7 | 🔜 Planned (Phase 3) |
 
 ---
@@ -101,6 +102,21 @@ This is Phase 1 of a 3-phase roadmap (see [ROADMAP.md](docs/ROADMAP.md)) — ear
 
    A `PLATFORM_ADMIN` account is also seeded on first startup (`admin@echotrace.dev` /
    `ChangeMe123!` by default — override via `Seed:AdminEmail` / `Seed:AdminPassword`).
+
+### Run the frontend
+
+With the API running (above), in a separate terminal:
+
+```bash
+cd src/EchoTrace.Web
+npm install
+npm run dev
+```
+
+Open the URL Vite prints (`http://localhost:5173`, or the next free port if that's taken —
+check the terminal output). Register a new org from the login screen, then onboard a
+supplier and watch it appear in the graph and audit trail. It talks to the API at
+`http://localhost:5150` by default; override with a `VITE_API_URL` env var if needed.
 
 ### Run API without Docker
 
