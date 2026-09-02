@@ -2,7 +2,13 @@ import { useState } from 'react';
 import { ApiError, decodeJwt, login, register } from '../api';
 import type { Session } from '../types';
 
-export function LoginPage({ onLogin }: { onLogin: (session: Session) => void }) {
+export function LoginPage({
+  onLogin,
+  notice,
+}: {
+  onLogin: (session: Session) => void;
+  notice?: string | null;
+}) {
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -92,6 +98,7 @@ export function LoginPage({ onLogin }: { onLogin: (session: Session) => void }) 
             </>
           )}
 
+          {notice && !error && <div className="notice">{notice}</div>}
           {error && <div className="error">{error}</div>}
 
           <button type="submit" className="primary" disabled={busy}>

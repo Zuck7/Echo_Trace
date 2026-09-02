@@ -153,6 +153,15 @@ button.primary:disabled {
   font-size: 13px;
 }
 
+.notice {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
 /* ---------- Dashboard ---------- */
 .dashboard {
   min-height: 100svh;

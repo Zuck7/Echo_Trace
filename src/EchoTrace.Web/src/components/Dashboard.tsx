@@ -10,7 +10,13 @@ const DEMO_SUPPLIERS = [
   { legalName: 'Global Logistics Partners', country: 'NL', relationshipType: 'DISTRIBUTES' },
 ];
 
-export function Dashboard({ session, onLogout }: { session: Session; onLogout: () => void }) {
+export function Dashboard({
+  session,
+  onLogout,
+}: {
+  session: Session;
+  onLogout: (message?: string) => void;
+}) {
   const [orgs, setOrgs] = useState<Organization[]>([]);
   const [tree, setTree] = useState<SupplyChainTree | null>(null);
   const [auditLog, setAuditLog] = useState<AuditLogEntry[]>([]);
@@ -34,15 +40,26 @@ export function Dashboard({ session, onLogout }: { session: Session; onLogout: (
     setAuditLog(logs);
   }, [session]);
 
+  // Access tokens last 15 minutes and there's no refresh flow yet, so any action can hit a 401
+  // mid-session. Centralize that: log out with an explanatory message instead of a bare
+  // "Request failed (401)" (JwtBearer's 401 challenge has no JSON body to show, either).
+  const handleSessionExpiry = useCallback(
+    (err: unknown): boolean => {
+      if (err instanceof ApiError && err.status === 401) {
+        onLogout('Your session expired (access tokens last 15 minutes). Please log in again.');
+        return true;
+      }
+      return false;
+    },
+    [onLogout],
+  );
+
   useEffect(() => {
     refresh().catch((err) => {
-      if (err instanceof ApiError && err.status === 401) {
-        onLogout(); // access token expired (15 min lifetime) — no refresh flow yet, so re-login
-        return;
-      }
+      if (handleSessionExpiry(err)) return;
       setError(err instanceof ApiError ? err.message : 'Failed to load data');
     });
-  }, [refresh, onLogout]);
+  }, [refresh, handleSessionExpiry]);
 
   async function handleAddSupplier(e: React.FormEvent) {
     e.preventDefault();
@@ -59,6 +76,7 @@ export function Dashboard({ session, onLogout }: { session: Session; onLogout: (
       setSupplierEmail('');
       await refresh();
     } catch (err) {
+      if (handleSessionExpiry(err)) return;
       setError(err instanceof ApiError ? err.message : 'Failed to add supplier');
     } finally {
       setBusy(false);
@@ -73,6 +91,7 @@ export function Dashboard({ session, onLogout }: { session: Session; onLogout: (
       setCycleTest({ ok: false, message: 'Unexpected: the edge was created. Cycle detection did not fire.' });
       await refresh();
     } catch (err) {
+      if (handleSessionExpiry(err)) return;
       if (err instanceof ApiError && err.status === 422) {
         setCycleTest({ ok: true, message: `Correctly rejected: ${err.message}` });
       } else {
@@ -101,6 +120,7 @@ export function Dashboard({ session, onLogout }: { session: Session; onLogout: (
       }
       await refresh();
     } catch (err) {
+      if (handleSessionExpiry(err)) return;
       setError(err instanceof ApiError ? err.message : 'Failed to seed demo suppliers');
     } finally {
       setBusy(false);
@@ -129,7 +149,7 @@ export function Dashboard({ session, onLogout }: { session: Session; onLogout: (
           <span>
             {session.email} · <code>{session.role}</code>
           </span>
-          <button onClick={onLogout} type="button">
+          <button onClick={() => onLogout()} type="button">
             Log out
           </button>
         </div>

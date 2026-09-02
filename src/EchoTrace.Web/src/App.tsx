@@ -21,12 +21,23 @@ function loadSession(): Session | null {
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(() => loadSession());
+  const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
     if (session) localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
     else localStorage.removeItem(STORAGE_KEY);
   }, [session]);
 
-  if (!session) return <LoginPage onLogin={setSession} />;
-  return <Dashboard session={session} onLogout={() => setSession(null)} />;
+  function handleLogin(newSession: Session) {
+    setNotice(null);
+    setSession(newSession);
+  }
+
+  function handleLogout(message?: string) {
+    setSession(null);
+    setNotice(message ?? null);
+  }
+
+  if (!session) return <LoginPage onLogin={handleLogin} notice={notice} />;
+  return <Dashboard session={session} onLogout={handleLogout} />;
 }
