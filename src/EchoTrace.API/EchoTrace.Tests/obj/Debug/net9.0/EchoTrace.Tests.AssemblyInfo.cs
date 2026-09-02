@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EchoTrace.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f02cccc7828bda35aee242d429baec095c791f17")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4ef825685edb2bb4842e9279322ce019f4ecfb53")]
 [assembly: System.Reflection.AssemblyProductAttribute("EchoTrace.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EchoTrace.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
