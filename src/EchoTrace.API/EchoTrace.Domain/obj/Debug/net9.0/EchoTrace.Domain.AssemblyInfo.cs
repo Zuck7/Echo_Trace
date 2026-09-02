@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EchoTrace.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7303c363353ce04e77bab75569a3df93f9202460")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f02cccc7828bda35aee242d429baec095c791f17")]
 [assembly: System.Reflection.AssemblyProductAttribute("EchoTrace.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EchoTrace.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

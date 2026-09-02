@@ -21,22 +21,26 @@ public class EchoTraceDbContext(
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(EchoTraceDbContext).Assembly);
 
-        // Global query filters — enforce tenant isolation
+        // Global query filters — enforce tenant isolation.
+        // IMPORTANT: reference `currentTenant.TenantId` directly in each filter lambda rather than
+        // hoisting it into a local variable first. EF Core only calls OnModelCreating once (the
+        // compiled model is cached across all DbContext instances/requests), so a captured local
+        // would freeze the tenant id from whichever request happened to build the model first.
+        // Referencing the injected service's property keeps it bound to *this* context instance,
+        // so it's re-evaluated correctly on every request.
         if (currentTenant is not null)
         {
-            var tenantId = currentTenant.TenantId;
-
             modelBuilder.Entity<Organization>()
-                .HasQueryFilter(o => o.TenantId == tenantId);
+                .HasQueryFilter(o => o.TenantId == currentTenant.TenantId);
 
             modelBuilder.Entity<SupplyChainEdge>()
-                .HasQueryFilter(e => e.TenantId == tenantId);
+                .HasQueryFilter(e => e.TenantId == currentTenant.TenantId);
 
             modelBuilder.Entity<Document>()
-                .HasQueryFilter(d => d.TenantId == tenantId);
+                .HasQueryFilter(d => d.TenantId == currentTenant.TenantId);
 
             modelBuilder.Entity<User>()
-                .HasQueryFilter(u => u.TenantId == tenantId);
+                .HasQueryFilter(u => u.TenantId == currentTenant.TenantId);
 
             // AuditLogEntries intentionally NOT filtered — Platform Admins query across tenants
         }

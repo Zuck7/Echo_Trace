@@ -1,4 +1,8 @@
+using EchoTrace.Application.Common.Interfaces;
 using EchoTrace.Application.SupplyChain.Commands.AddEdge;
+using EchoTrace.Application.SupplyChain.Commands.RemoveEdge;
+using EchoTrace.Application.SupplyChain.Queries.GetSupplyChainTree;
+using EchoTrace.Domain.Interfaces.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +12,10 @@ namespace EchoTrace.API.Controllers;
 [ApiController]
 [Route("api/v1/supply-chain")]
 [Authorize]
-public class SupplyChainController(IMediator mediator) : ControllerBase
+public class SupplyChainController(
+    IMediator mediator,
+    ICycleDetectionService cycleDetector,
+    ICurrentTenantService tenant) : ControllerBase
 {
     /// <summary>Add a supplier relationship. Runs cycle detection before persisting.</summary>
     [HttpPost("edges")]
@@ -22,18 +29,18 @@ public class SupplyChainController(IMediator mediator) : ControllerBase
     /// <summary>Deactivate a supplier relationship.</summary>
     [HttpDelete("edges/{edgeId:guid}")]
     [Authorize(Roles = "ORG_ADMIN")]
-    public IActionResult RemoveEdge(Guid edgeId)
+    public async Task<IActionResult> RemoveEdge(Guid edgeId, CancellationToken ct)
     {
-        // TODO: wire up RemoveEdgeCommand in Milestone 1.4
+        await mediator.Send(new RemoveEdgeCommand(edgeId), ct);
         return NoContent();
     }
 
     /// <summary>Get downstream supplier tree from an org.</summary>
     [HttpGet("tree/{orgId:guid}")]
-    public IActionResult GetTree(Guid orgId, [FromQuery] int depth = -1)
+    public async Task<IActionResult> GetTree(Guid orgId, [FromQuery] int depth = -1, CancellationToken ct = default)
     {
-        // TODO: wire up GetSupplyChainTreeQuery in Milestone 1.4
-        return Ok(new { message = "GetTree — implement in Milestone 1.4", orgId, depth });
+        var result = await mediator.Send(new GetSupplyChainTreeQuery(orgId, depth), ct);
+        return Ok(result);
     }
 
     /// <summary>Full trace-back report for an org.</summary>
@@ -46,10 +53,11 @@ public class SupplyChainController(IMediator mediator) : ControllerBase
 
     /// <summary>Pre-flight cycle check without persisting the edge.</summary>
     [HttpPost("cycle-check")]
-    public IActionResult CycleCheck([FromBody] CycleCheckRequest request)
+    public async Task<IActionResult> CycleCheck([FromBody] CycleCheckRequest request, CancellationToken ct)
     {
-        // TODO: wire up cycle detection service directly in Milestone 1.4
-        return Ok(new { message = "CycleCheck — implement in Milestone 1.4" });
+        var result = await cycleDetector.WouldCreateCycleAsync(
+            request.ParentOrgId, request.ChildOrgId, tenant.TenantId, ct);
+        return Ok(result);
     }
 }
 

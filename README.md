@@ -22,19 +22,40 @@ Echo-Trace provides a verifiable Digital Product Passport by:
 
 ---
 
+## Current Status
+
+This is Phase 1 of a 3-phase roadmap (see [ROADMAP.md](docs/ROADMAP.md)) — early and honestly labeled as such.
+
+**Working today** (C# .NET 9 Core API, Clean Architecture — Domain/Application/Infrastructure/API):
+- Multi-tenant data isolation via EF Core global query filters, verified by an integration test that asserts one tenant cannot see or fetch another's data
+- JWT auth: self-service org registration, login, RBAC (`PLATFORM_ADMIN`, `ORG_ADMIN` roles enforced)
+- Supply chain graph: add/remove supplier edges, self-referential and multi-hop cycle detection (DFS-based), a pre-flight cycle-check endpoint
+- Downstream supplier tree via a genuine SQL Server **recursive CTE** (not an in-memory graph walk — see `SupplyChainRepository.GetSupplierTreeAsync`)
+- Immutable, hash-chained audit log — every mutating command automatically logs a SHA-256-chained entry; tampering with any stored row breaks every hash after it. Exposed at `GET /api/v1/audit/logs`
+- 19 automated tests (xUnit): unit tests for cycle detection, password hashing, and hash-chain determinism; HTTP-level integration tests for auth and tenant isolation, running against EF Core InMemory so they need no external DB in CI
+- Runs end-to-end via `docker compose up --build` — SQL Server + API, with real EF Core migrations and a seeded platform-admin account
+
+**Not built yet** (see [ROADMAP.md](docs/ROADMAP.md) for the full breakdown):
+- Document upload / certification storage (Milestone 1.5) — no Node.js file service, no MinIO wiring
+- Invitation-based supplier onboarding (Milestone 1.2's `/auth/invite` + `/auth/refresh`) — suppliers today are added directly by their buyer's Org Admin, which is why a supplier can't yet log in as itself to extend the chain another tier
+- React frontend — the API is demoed via Swagger/curl (see [scripts/demo.sh](scripts/demo.sh)) or a REST client
+- Everything in Phase 2 (compliance scoring, DPP generation, expiry alerts) and Phase 3 (scale, integrations)
+
+---
+
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Core API | C# .NET 9, Clean Architecture, MediatR, EF Core 9 |
-| Database | SQL Server 2022 (Recursive CTEs for graph traversal) |
-| File Service | Node.js 20, Express, multer, SHA-256 |
-| Document Storage | Azure Blob Storage / MinIO |
-| Frontend | React 18, TypeScript, Vite, Tailwind CSS, Cytoscape.js |
-| Auth | JWT (15-min access) + HTTP-only refresh tokens |
-| Cache | Redis 7 |
-| Containers | Docker + Kubernetes |
-| CI/CD | GitHub Actions |
+| Layer | Technology | Status |
+|-------|-----------|--------|
+| Core API | C# .NET 9, Clean Architecture, MediatR, EF Core 9 | ✅ Built |
+| Database | SQL Server 2022 (Recursive CTEs for graph traversal) | ✅ Built |
+| Auth | JWT (15-min access) | ✅ Built — refresh token rotation planned |
+| Containers | Docker Compose | ✅ Built — Kubernetes manifests planned |
+| CI/CD | GitHub Actions | ✅ Built |
+| File Service | Node.js 20, Express, multer, SHA-256 | 🔜 Planned (Milestone 1.5) |
+| Document Storage | Azure Blob Storage / MinIO | 🔜 Planned (Milestone 1.5) |
+| Frontend | React 18, TypeScript, Vite, Tailwind CSS, Cytoscape.js | 🔜 Planned |
+| Cache | Redis 7 | 🔜 Planned (Phase 3) |
 
 ---
 
@@ -70,6 +91,16 @@ Echo-Trace provides a verifiable Digital Product Passport by:
       ```
       http://localhost:5150/swagger
       ```
+
+5. Walk the core flow (register → login → onboard suppliers → build the graph → cycle
+   detection → hash-chained audit trail) in one shot:
+
+      ```bash
+      ./scripts/demo.sh
+      ```
+
+   A `PLATFORM_ADMIN` account is also seeded on first startup (`admin@echotrace.dev` /
+   `ChangeMe123!` by default — override via `Seed:AdminEmail` / `Seed:AdminPassword`).
 
 ### Run API without Docker
 

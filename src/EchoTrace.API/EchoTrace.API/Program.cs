@@ -2,8 +2,10 @@ using System.Text;
 using EchoTrace.API.Middleware;
 using EchoTrace.Application.Common.Behaviors;
 using EchoTrace.Application.Common.Interfaces;
+using EchoTrace.Domain.Interfaces.Repositories;
 using EchoTrace.Domain.Interfaces.Services;
 using EchoTrace.Infrastructure.Persistence;
+using EchoTrace.Infrastructure.Persistence.Repositories;
 using EchoTrace.Infrastructure.Services;
 using FluentValidation;
 using MediatR;
@@ -53,12 +55,16 @@ services.AddHttpContextAccessor();
 services.AddScoped<ICycleDetectionService, CycleDetectionService>();
 services.AddScoped<IAuditService, AuditService>();
 services.AddScoped<ICurrentTenantService, CurrentTenantService>();
+services.AddScoped<IPasswordHasher, PasswordHasher>();
+services.AddScoped<IJwtTokenService, JwtTokenService>();
 
-// Repository registrations — uncomment as you implement each
-// services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-// services.AddScoped<ISupplyChainRepository, SupplyChainRepository>();
-// services.AddScoped<IDocumentRepository, DocumentRepository>();
-// services.AddScoped<IAuditLogRepository, AuditLogRepository>();
+// Repository registrations
+services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+services.AddScoped<ISupplyChainRepository, SupplyChainRepository>();
+services.AddScoped<IAuditLogRepository, AuditLogRepository>();
+services.AddScoped<IUserRepository, UserRepository>();
+services.AddScoped<ITenantRepository, TenantRepository>();
+// IDocumentRepository has no implementation yet — document upload (Milestone 1.5) isn't built.
 
 // JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"];
@@ -125,6 +131,10 @@ if (app.Environment.IsDevelopment())
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<EchoTraceDbContext>();
     await db.Database.MigrateAsync();
+
+    var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+    var seedLogger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    await DbInitializer.SeedAsync(db, hasher, builder.Configuration, seedLogger);
 }
 
 app.UseHttpsRedirection();

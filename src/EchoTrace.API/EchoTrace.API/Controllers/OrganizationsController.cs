@@ -1,4 +1,6 @@
 using EchoTrace.Application.Organizations.Commands.CreateOrganization;
+using EchoTrace.Application.Organizations.Queries.GetOrganizationById;
+using EchoTrace.Application.Organizations.Queries.GetOrganizations;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +12,13 @@ namespace EchoTrace.API.Controllers;
 [Authorize]
 public class OrganizationsController(IMediator mediator) : ControllerBase
 {
-    /// <summary>Create a new organization (Platform Admin only).</summary>
+    /// <summary>
+    /// Create a new organization within the caller's tenant. Platform Admins onboard buying
+    /// orgs; Org Admins use this to add a supplier node to their own supply chain graph
+    /// (until invitation-based supplier self-registration — Milestone 1.2 — exists).
+    /// </summary>
     [HttpPost]
-    [Authorize(Roles = "PLATFORM_ADMIN")]
+    [Authorize(Roles = "PLATFORM_ADMIN,ORG_ADMIN")]
     public async Task<IActionResult> Create([FromBody] CreateOrganizationCommand command, CancellationToken ct)
     {
         var result = await mediator.Send(command, ct);
@@ -21,17 +27,17 @@ public class OrganizationsController(IMediator mediator) : ControllerBase
 
     /// <summary>Get organization by ID.</summary>
     [HttpGet("{orgId:guid}")]
-    public IActionResult GetById(Guid orgId)
+    public async Task<IActionResult> GetById(Guid orgId, CancellationToken ct)
     {
-        // TODO: wire up GetOrganizationByIdQuery in Milestone 1.3
-        return Ok(new { message = "GetById — implement in Milestone 1.3", orgId });
+        var result = await mediator.Send(new GetOrganizationByIdQuery(orgId), ct);
+        return result is null ? NotFound() : Ok(result);
     }
 
     /// <summary>List organizations for the current tenant.</summary>
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll(CancellationToken ct)
     {
-        // TODO: wire up GetOrganizationsQuery in Milestone 1.3
-        return Ok(new { message = "GetAll — implement in Milestone 1.3" });
+        var result = await mediator.Send(new GetOrganizationsQuery(), ct);
+        return Ok(result);
     }
 }

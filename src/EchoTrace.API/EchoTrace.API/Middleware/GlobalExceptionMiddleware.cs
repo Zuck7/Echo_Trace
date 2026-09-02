@@ -42,16 +42,22 @@ public class GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExcep
                 dive.Message),
 
             UnauthorizedAccessException => (
-                403,
-                "https://echo-trace.com/errors/forbidden",
-                "Access denied",
-                "You do not have permission to perform this action."),
+                401,
+                "https://echo-trace.com/errors/unauthorized",
+                "Authentication failed",
+                ex.Message),
 
             KeyNotFoundException => (
                 404,
                 "https://echo-trace.com/errors/not-found",
                 "Resource not found",
                 ex.Message),
+
+            InvalidOperationException ioe => (
+                409,
+                "https://echo-trace.com/errors/conflict",
+                "Request conflicts with current state",
+                ioe.Message),
 
             _ => (
                 500,
