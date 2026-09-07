@@ -69,6 +69,21 @@ export interface AuditLogEntry {
   chainHash: string;
 }
 
+export interface DocumentRecord {
+  documentId: string;
+  orgId: string;
+  documentType: string;
+  originalFileName: string;
+  blobPath: string;
+  contentHash: string;
+  fileSizeBytes: number;
+  mimeType: string;
+  issuedAt: string | null;
+  expiresAt: string | null;
+  status: string;
+  uploadedAt: string;
+}
+
 export interface ProblemDetails {
   title: string;
   status: number;

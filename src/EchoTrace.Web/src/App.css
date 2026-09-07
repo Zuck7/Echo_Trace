@@ -397,9 +397,15 @@ tr.self td {
   color: #854d0e;
 }
 
-.badge.suspended {
+.badge.suspended,
+.badge.revoked {
   background: #fee2e2;
   color: #991b1b;
+}
+
+.badge.expired {
+  background: #fef9c3;
+  color: #854d0e;
 }
 
 .hash {
