@@ -4,6 +4,7 @@ using EchoTrace.Application.Common.Behaviors;
 using EchoTrace.Application.Common.Interfaces;
 using EchoTrace.Domain.Interfaces.Repositories;
 using EchoTrace.Domain.Interfaces.Services;
+using EchoTrace.Infrastructure.ExternalServices;
 using EchoTrace.Infrastructure.Persistence;
 using EchoTrace.Infrastructure.Persistence.Repositories;
 using EchoTrace.Infrastructure.Services;
@@ -51,12 +52,17 @@ services.AddValidatorsFromAssembly(typeof(ValidationBehavior<,>).Assembly);
 // HTTP context accessor (needed by CurrentTenantService)
 services.AddHttpContextAccessor();
 
+// In-memory cache backing IUploadRequestStore (Milestone 1.5) — fine for a single-instance Phase
+// 1 deployment; a multi-instance deployment would need Redis instead (Phase 3).
+services.AddMemoryCache();
+
 // Infrastructure services
 services.AddScoped<ICycleDetectionService, CycleDetectionService>();
 services.AddScoped<IAuditService, AuditService>();
 services.AddScoped<ICurrentTenantService, CurrentTenantService>();
 services.AddScoped<IPasswordHasher, PasswordHasher>();
 services.AddScoped<IJwtTokenService, JwtTokenService>();
+services.AddSingleton<IUploadRequestStore, UploadRequestStore>();
 
 // Repository registrations
 services.AddScoped<IOrganizationRepository, OrganizationRepository>();
@@ -64,7 +70,30 @@ services.AddScoped<ISupplyChainRepository, SupplyChainRepository>();
 services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 services.AddScoped<IUserRepository, UserRepository>();
 services.AddScoped<ITenantRepository, TenantRepository>();
-// IDocumentRepository has no implementation yet — document upload (Milestone 1.5) isn't built.
+services.AddScoped<IDocumentRepository, DocumentRepository>();
+
+// File Service (Node.js, internal-only) — see docs/ADR/003-file-microservice.md
+var fileServiceBaseUrl = builder.Configuration["FileService:BaseUrl"];
+if (string.IsNullOrWhiteSpace(fileServiceBaseUrl))
+{
+    fileServiceBaseUrl = builder.Environment.IsEnvironment("Testing")
+        ? "http://fileservice.invalid"
+        : throw new InvalidOperationException("FileService:BaseUrl is not configured.");
+}
+
+var fileServiceInternalKey = builder.Configuration["FileService:InternalKey"];
+if (string.IsNullOrWhiteSpace(fileServiceInternalKey))
+{
+    fileServiceInternalKey = builder.Environment.IsEnvironment("Testing")
+        ? "test-internal-key"
+        : throw new InvalidOperationException("FileService:InternalKey is not configured.");
+}
+
+services.AddHttpClient<IFileServiceClient, FileServiceClient>(client =>
+{
+    client.BaseAddress = new Uri(fileServiceBaseUrl);
+    client.DefaultRequestHeaders.Add("X-Internal-Key", fileServiceInternalKey);
+});
 
 // JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"];

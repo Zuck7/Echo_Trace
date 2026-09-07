@@ -9,4 +9,7 @@ public interface IDocumentRepository
     Task AddAsync(Document document, CancellationToken ct = default);
     Task UpdateAsync(Document document, CancellationToken ct = default);
     Task<List<Document>> GetExpiringBeforeAsync(DateOnly cutoff, CancellationToken ct = default);
+
+    Task<List<Document>> QueryAsync(
+        Guid orgId, string? documentType, string? status, int pageSize, string? cursor, CancellationToken ct = default);
 }

@@ -1,0 +1,19 @@
+{
+  "name": "echotrace-file-service",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Internal Node.js microservice that hashes and stores certification documents for Echo-Trace (see docs/ADR/003-file-microservice.md). Not exposed to the public internet.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "minio": "^8.0.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}
