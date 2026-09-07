@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ApiError, addEdge, createOrganization, getAuditLogs, getOrganizations, getSupplyChainTree } from '../api';
 import type { AuditLogEntry, Organization, Session, SupplyChainTree } from '../types';
+import { Documents } from './Documents';
 import { SupplyChainGraph } from './SupplyChainGraph';
 
 const DEMO_SUPPLIERS = [
@@ -305,6 +306,8 @@ export function Dashboard({
             </tbody>
           </table>
         </section>
+
+        <Documents session={session} onSessionExpired={handleSessionExpiry} />
 
         <section className="panel span-2 dpp-card">
           <div className="panel-header">
