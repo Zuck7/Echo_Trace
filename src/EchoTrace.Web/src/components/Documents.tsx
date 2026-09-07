@@ -7,9 +7,11 @@ const DOCUMENT_TYPES = ['ISO_14001', 'ISO_45001', 'ISO_9001', 'ESG_REPORT', 'OTH
 export function Documents({
   session,
   onSessionExpired,
+  onChanged,
 }: {
   session: Session;
   onSessionExpired: (err: unknown) => boolean;
+  onChanged: () => void;
 }) {
   const [documents, setDocuments] = useState<DocumentRecord[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -48,6 +50,7 @@ export function Documents({
       setFile(null);
       if (fileInputRef.current) fileInputRef.current.value = '';
       await refresh();
+      onChanged();
     } catch (err) {
       if (onSessionExpired(err)) return;
       setError(err instanceof ApiError ? err.message : 'Failed to upload document');
@@ -78,6 +81,7 @@ export function Documents({
     try {
       await revokeDocument(session.accessToken, doc.documentId);
       await refresh();
+      onChanged();
     } catch (err) {
       if (onSessionExpired(err)) return;
       setError(err instanceof ApiError ? err.message : 'Failed to revoke document');

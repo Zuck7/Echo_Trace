@@ -307,7 +307,15 @@ export function Dashboard({
           </table>
         </section>
 
-        <Documents session={session} onSessionExpired={handleSessionExpiry} />
+        <Documents
+          session={session}
+          onSessionExpired={handleSessionExpiry}
+          onChanged={() => {
+            refresh().catch(() => {
+              /* Documents' own refresh already surfaced any error to the user. */
+            });
+          }}
+        />
 
         <section className="panel span-2 dpp-card">
           <div className="panel-header">

@@ -81,14 +81,17 @@ Each phase ends with a shippable, tested, and deployed product increment.
 
 ### Milestone 1.5: Document Ingestion
 
-- [ ] Node.js File Service: `POST /upload` with multer + SHA-256 hashing + MinIO storage
-- [ ] File Service: `GET /health` and internal auth middleware
-- [ ] Core API: `POST /documents/upload-request` → `POST /documents/confirm-upload` two-step flow
-- [ ] Core API: `GET /documents` and `GET /documents/{id}`
-- [ ] Core API: `GET /documents/{id}/download` with hash re-verification
-- [ ] Core API: `DELETE /documents/{documentId}` (revoke)
-- [ ] Unit tests: SHA-256 hash computation; tampered file detection
-- [ ] React: Document list, upload form, certificate detail view
+- [x] Node.js File Service: `POST /upload` with multer + SHA-256 hashing + MinIO storage
+- [x] File Service: `GET /health` and internal auth middleware
+- [x] Core API: `POST /documents/upload-request` → `POST /documents/confirm-upload` two-step flow
+      (the file bytes are streamed through the Core API to the File Service rather than the
+      browser calling the File Service directly, so its internal key never leaves the server —
+      see `src/EchoTrace.API/EchoTrace.API/Controllers/DocumentsController.cs`)
+- [x] Core API: `GET /documents` and `GET /documents/{id}`
+- [x] Core API: `GET /documents/{id}/download` with hash re-verification
+- [x] Core API: `DELETE /documents/{documentId}` (revoke)
+- [x] Unit tests: SHA-256 hash computation; tampered file detection
+- [x] React: Document list, upload form, certificate detail view
 
 **Definition of Done:** Compliance Officer can upload a PDF; the system stores it with its hash; download re-verifies the hash.
 

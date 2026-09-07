@@ -32,13 +32,13 @@ This is Phase 1 of a 3-phase roadmap (see [ROADMAP.md](docs/ROADMAP.md)) — ear
 - Supply chain graph: add/remove supplier edges, self-referential and multi-hop cycle detection (DFS-based), a pre-flight cycle-check endpoint
 - Downstream supplier tree via a genuine SQL Server **recursive CTE** (not an in-memory graph walk — see `SupplyChainRepository.GetSupplierTreeAsync`)
 - Immutable, hash-chained audit log — every mutating command automatically logs a SHA-256-chained entry; tampering with any stored row breaks every hash after it. Exposed at `GET /api/v1/audit/logs`
-- 19 automated tests (xUnit): unit tests for cycle detection, password hashing, and hash-chain determinism; HTTP-level integration tests for auth and tenant isolation, running against EF Core InMemory so they need no external DB in CI
-- Runs end-to-end via `docker compose up --build` — SQL Server + API, with real EF Core migrations and a seeded platform-admin account
+- Document ingestion: a decoupled Node.js/Express file service (`src/EchoTrace.FileService`) hashes uploads with SHA-256 and stores them in MinIO; the Core API mediates every upload/download so the file service's internal auth key never reaches the browser (see `docs/ADR/003-file-microservice.md`). Every download re-verifies the stored hash against the blob before serving it — tamper with a stored file and the next download attempt fails with a 422, not silently corrupted data
+- 25 automated tests (xUnit): unit tests for cycle detection, password hashing, hash-chain determinism, and document integrity/tamper detection; HTTP-level integration tests for auth, tenant isolation, and the full upload → list → download → revoke document flow, running against EF Core InMemory and a fake file service so they need no external DB/MinIO in CI
+- Runs end-to-end via `docker compose up --build` — SQL Server + MinIO + File Service + API, with real EF Core migrations and a seeded platform-admin account
 
-A minimal **React 19 + TypeScript + Vite** frontend at [`src/EchoTrace.Web`](src/EchoTrace.Web) now covers the same flow: register/login, an organization table, a "add & link supplier" form, a live Cytoscape.js render of the supply chain graph, and the hash-chained audit trail — see [Quick Start](#quick-start-local-development) below. It's intentionally plain (no router, no state library) rather than the full feature-folder structure in [PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md); treat it as a demo shell, not the Phase-1-complete frontend.
+A minimal **React 19 + TypeScript + Vite** frontend at [`src/EchoTrace.Web`](src/EchoTrace.Web) now covers the same flow: register/login, an organization table, a "add & link supplier" form, a live Cytoscape.js render of the supply chain graph, a "Certifications" panel to upload/verify-and-download/revoke documents, and the hash-chained audit trail — see [Quick Start](#quick-start-local-development) below. It's intentionally plain (no router, no state library) rather than the full feature-folder structure in [PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md); treat it as a demo shell, not the Phase-1-complete frontend.
 
 **Not built yet** (see [ROADMAP.md](docs/ROADMAP.md) for the full breakdown):
-- Document upload / certification storage (Milestone 1.5) — no Node.js file service, no MinIO wiring
 - Invitation-based supplier onboarding (Milestone 1.2's `/auth/invite` + `/auth/refresh`) — suppliers today are added directly by their buyer's Org Admin, which is why a supplier can't yet log in as itself to extend the chain another tier; also means the frontend has no logout-triggering refresh, so a session silently needs re-login after the 15-minute access token expires
 - Everything in Phase 2 (compliance scoring, DPP generation, expiry alerts) and Phase 3 (scale, integrations)
 
@@ -53,8 +53,8 @@ A minimal **React 19 + TypeScript + Vite** frontend at [`src/EchoTrace.Web`](src
 | Auth | JWT (15-min access) | ✅ Built — refresh token rotation planned |
 | Containers | Docker Compose | ✅ Built — Kubernetes manifests planned |
 | CI/CD | GitHub Actions | ✅ Built |
-| File Service | Node.js 20, Express, multer, SHA-256 | 🔜 Planned (Milestone 1.5) |
-| Document Storage | Azure Blob Storage / MinIO | 🔜 Planned (Milestone 1.5) |
+| File Service | Node.js 20, Express, multer, SHA-256 | ✅ Built |
+| Document Storage | MinIO | ✅ Built — Azure Blob Storage swap planned for production |
 | Frontend | React 19, TypeScript, Vite, Cytoscape.js | ✅ Minimal demo shell built — Tailwind, routing, full feature structure planned |
 | Cache | Redis 7 | 🔜 Planned (Phase 3) |
 
@@ -75,7 +75,7 @@ A minimal **React 19 + TypeScript + Vite** frontend at [`src/EchoTrace.Web`](src
       cp .env.example .env
       ```
 
-2. Start SQL Server + API:
+2. Start SQL Server + MinIO + File Service + API:
 
       ```bash
       docker compose up --build
